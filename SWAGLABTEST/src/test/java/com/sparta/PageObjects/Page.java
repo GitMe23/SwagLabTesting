@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 public abstract class Page {
     protected WebDriver webDriver;
-    private final By sideBarLink = new By.ById("react-burger-menu-btn");
+    private final By sideBarOpen = new By.ById("react-burger-menu-btn");
     private final By inventorySideBarLink = new By.ById("inventory_sidebar_link");
     private final By aboutSidebarLink = new By.ById("about_sidebar_link");
     private final By logoutSidebarLink = new By.ById("logout_sidebar_link");
@@ -15,6 +15,7 @@ public abstract class Page {
     private final By twitterLink = new By.ByLinkText("twitter");
     private final By facebookLink = new By.ByLinkText("facebook");
     private final By linkedInLink = new By.ByLinkText("LinkedIn");
+    private final By sideBarCross = new By.ById("react-burger-cross-btn");
 
     public String getUrl() {
         return webDriver.getCurrentUrl();
@@ -78,8 +79,10 @@ public abstract class Page {
     public void clickSidebarReset() {
         openDropDownMenu();
         webDriver.findElement(resetSidebarLink).click();
+        closeDropDownMenu();
     }
     private void openDropDownMenu() {
-        webDriver.findElement(sideBarLink).click();
+        webDriver.findElement(sideBarOpen).click();
     }
+    private void closeDropDownMenu() { webDriver.findElement(sideBarCross).click(); }
 }
