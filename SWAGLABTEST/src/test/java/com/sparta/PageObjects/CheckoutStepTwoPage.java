@@ -21,11 +21,6 @@ public class CheckoutStepTwoPage {
 
 
 
-    public CheckoutStepTwoPage(WebDriver webDriver) {
-        super(webDriver);
-        this.webDriver = webDriver;
-    }
-
     public boolean isTotalCorrect() {
         List<WebElement> productPrices = webDriver.findElement(itemdDiv).findElements(itemPrice);
         double total = 0;
