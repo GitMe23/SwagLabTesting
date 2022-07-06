@@ -13,6 +13,7 @@ public class LoginPage {
 
     public LoginPage(WebDriver webDriver) {
         this.webDriver = webDriver;
+        webDriver.get("https://www.saucedemo.com/");
     }
 
     public String getUrl() {
@@ -43,28 +44,33 @@ public class LoginPage {
         webDriver.findElement(By.id("login-button")).click();
     }
 
-    public void loginAsStandardUser() {
+
+    public InventoryPage loginAsStandardUser() {
         webDriver.findElement(By.id("user-name")).sendKeys("standard_user");
         enterPassword();
         clickLogin();
+        return new InventoryPage(webDriver);
     }
 
-    public void loginAsLockedOutUser() {
+    public InventoryPage loginAsLockedOutUser() {
         webDriver.findElement(By.id("user-name")).sendKeys("standard_user");
         enterPassword();
         clickLogin();
+        return new InventoryPage(webDriver);
     }
 
-    public void loginAsProblemUser() {
+    public InventoryPage loginAsProblemUser() {
         webDriver.findElement(By.id("user-name")).sendKeys("problem_user");
         enterPassword();
         clickLogin();
+        return new InventoryPage(webDriver);
     }
 
-    public void loginAsPerformanceGlitchUser() {
+    public InventoryPage loginAsPerformanceGlitchUser() {
         webDriver.findElement(By.id("user-name")).sendKeys("performance_glitch_user");
         enterPassword();
         clickLogin();
+        return new InventoryPage(webDriver);
     }
 
     public void setDeviceSize(int width, int height) {
@@ -73,27 +79,27 @@ public class LoginPage {
 
 
     public void setAsMobilePortrait() {
-        webDriver.manage().window().setSize(new Dimension(320, 480));
+        setDeviceSize(320, 480);
     }
 
     public void setAsMobileLandscape() {
-        webDriver.manage().window().setSize(new Dimension(480, 320));
+        setDeviceSize(480, 320);
     }
 
     public void setAsSmallTabletPortrait() {
-        webDriver.manage().window().setSize(new Dimension(600,800));
+        setDeviceSize(600,800);
     }
 
     public void setAsSmallTabletLandscape() {
-        webDriver.manage().window().setSize(new Dimension(800,600));
+        setDeviceSize(800,600);
     }
 
     public void setAsTabletPortrait() {
-        webDriver.manage().window().setSize(new Dimension(768,1024));
+        setDeviceSize(768,1024);
     }
 
     public void setAsTabletLandscape() {
-        webDriver.manage().window().setSize(new Dimension(1024,768));
+        setDeviceSize(1024,768);
     }
 
     public void setAsMaximumWindowSize() {
@@ -103,5 +109,6 @@ public class LoginPage {
     public void setFullScreen() {
         webDriver.manage().window().fullscreen();
     }
+
 
 }
