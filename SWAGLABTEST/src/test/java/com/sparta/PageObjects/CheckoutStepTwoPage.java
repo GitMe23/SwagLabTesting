@@ -8,10 +8,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class CheckoutStepTwoPage {
+public class CheckoutStepTwoPage extends Page {
 
 
-    WebDriver webDriver;
+    //private WebDriver webDriver;
     private By itemdDiv = By.className("cart_list");
     private By itemPrice = By.className("inventory_item_price");
     private By total = By.className("summary_total_label");
@@ -73,16 +73,7 @@ public class CheckoutStepTwoPage {
 
     }
 
-    public CheckoutCompletePage clickFinish() {
-        webDriver.findElement(finishButton).click();
-        return new CheckoutCompletePage(webDriver);
-    }
-
-    public InventoryPage clickCancel() {
-        webDriver.findElement(cancelButton).click();
-        return new InventoryPage(webDriver);
-    }
-
+    //could be depreciated in next version of MVP
     public boolean isConfirmationPage() {
         webDriver.findElement(finishButton).click();
         try {
@@ -93,6 +84,17 @@ public class CheckoutStepTwoPage {
         return webDriver.getCurrentUrl().equals("https://www.saucedemo.com/inventory.html");
 
     }
+
+    public CheckoutCompletePage clickFinish() {
+        webDriver.findElement(finishButton).click();
+        return new CheckoutCompletePage(webDriver);
+    }
+
+    public InventoryPage clickCancel() {
+        webDriver.findElement(cancelButton).click();
+        return new InventoryPage(webDriver);
+    }
+
 
     public boolean hasTwoNumsPastPoint() {
 
