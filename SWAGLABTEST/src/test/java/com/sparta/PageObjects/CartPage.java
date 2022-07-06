@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 public class CartPage extends Page {
 
     public CartPage (WebDriver webDriver) {
-        super(webDriver);
         this.webDriver = webDriver;
     }
 
@@ -15,14 +14,20 @@ public class CartPage extends Page {
 
     public CheckoutStepOnePage getCheckout() {
         webDriver.findElement(By.id("checkout")).click();
-;
         return new CheckoutStepOnePage(webDriver);
     }
 
     public boolean checkItemRemoved() {
-        if (webDriver.findElement(By.className("removed_cart_item")) != null) {
-            return true;
-        }
-        return false;
+        return webDriver.findElement(By.className("removed_cart_item")) != null;
+    }
+
+    public InventoryItemPage checkItemFromCart() {
+        webDriver.findElement(By.className("inventory_item_name")).click();
+        return new InventoryItemPage(webDriver);
+    }
+
+    public InventoryPage checkContinueShopBtn() {
+        webDriver.findElement(By.id("continue-shopping"));
+        return new InventoryPage(webDriver);
     }
 }
