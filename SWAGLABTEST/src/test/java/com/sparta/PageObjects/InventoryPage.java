@@ -9,7 +9,6 @@ import java.util.List;
 
 public class InventoryPage extends Page {
 
-    private WebDriver webDriver;
     public InventoryPage(WebDriver webDriver){
       this.webDriver = webDriver;
     }
@@ -98,18 +97,23 @@ public class InventoryPage extends Page {
         }
         return orderCorrect;
     }
-    
 
-    public InventoryItemPage goToItemPageByName(int index){
+
+    public InventoryItemPage goToItemPageBasedOnSortedOrderPosition(int index){
         String productName = getProductName(index);
         getProducts(index).findElement(By.className("inventory_item_name")).click();
-        return new InventoryItemPage(webDriver, productName);
+        return new InventoryItemPage(webDriver);
+    }
+
+    public InventoryItemPage goToItemPageBasedOnName (String name){
+        webDriver.findElement(By.linkText(name)).click();
+        return new InventoryItemPage(webDriver);
     }
 
     public InventoryItemPage goToItemPageBYImage(int index){
         String productName = getProductName(index);
         getProducts(index).findElement(By.className("inventory_item_img")).click();
-        return new InventoryItemPage(webDriver, productName);
+        return new InventoryItemPage(webDriver);
     }
     // might need to combine find elements for the below method
     public int viewItemsInCart(){

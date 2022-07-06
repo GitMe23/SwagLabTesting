@@ -5,12 +5,11 @@ import org.openqa.selenium.WebDriver;
 
 public class InventoryItemPage extends Page {
 
-    private WebDriver webDriver;
-    private String productName;
 
-    public InventoryItemPage(WebDriver webDriver, String productName) {
+
+    public InventoryItemPage(WebDriver webDriver) {
         this.webDriver = webDriver;
-        productName = productName;
+
     }
     public String getName(){
         return webDriver.findElement(By.className("inventory_details_name")).getText();
