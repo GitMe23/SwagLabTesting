@@ -1,5 +1,6 @@
 package com.sparta.PageObjects;
 
+import io.cucumber.java.bs.I;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -97,25 +98,27 @@ public class InventoryPage extends Page {
         }
         return orderCorrect;
     }
+    
 
-    public boolean viewProductPageFromName(int index){
+    public InventoryItemPage goToItemPageByName(int index){
+        String productName = getProductName(index);
         getProducts(index).findElement(By.className("inventory_item_name")).click();
-
-    }
-    public boolean viewProductPageFromImage(int index){
-        getProducts(index).findElement(By.className("inventory_item_name")).click();
-
+        return new InventoryItemPage(webDriver, productName);
     }
 
-
-
-
-
-
-
-
-
-
-
-
+    public InventoryItemPage goToItemPageBYImage(int index){
+        String productName = getProductName(index);
+        getProducts(index).findElement(By.className("inventory_item_img")).click();
+        return new InventoryItemPage(webDriver, productName);
+    }
+    // might need to combine find elements for the below method
+    public int viewItemsInCart(){
+        String shoppingCartNumber = "";
+        try {
+            shoppingCartNumber = webDriver.findElement(By.className("shopping_cart_badge")).getText();
+        }catch (Exception e) {
+            return 0;
+        }
+        return Integer.parseInt(shoppingCartNumber);
+    }
 }
