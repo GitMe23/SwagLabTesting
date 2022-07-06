@@ -22,7 +22,7 @@ public class CheckoutStepTwoPage {
 
 
     public CheckoutStepTwoPage(WebDriver webDriver) {
-        super(webDriver);
+    
         this.webDriver = webDriver;
     }
 
