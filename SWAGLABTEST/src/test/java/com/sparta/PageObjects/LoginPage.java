@@ -1,6 +1,7 @@
 package com.sparta.PageObjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
@@ -64,6 +65,43 @@ public class LoginPage {
         webDriver.findElement(By.id("user-name")).sendKeys("performance_glitch_user");
         enterPassword();
         clickLogin();
+    }
+
+    public void setDeviceSize(int width, int height) {
+        webDriver.manage().window().setSize(new Dimension(width, height));
+    }
+
+
+    public void setAsMobilePortrait() {
+        webDriver.manage().window().setSize(new Dimension(320, 480));
+    }
+
+    public void setAsMobileLandscape() {
+        webDriver.manage().window().setSize(new Dimension(480, 320));
+    }
+
+    public void setAsSmallTabletPortrait() {
+        webDriver.manage().window().setSize(new Dimension(600,800));
+    }
+
+    public void setAsSmallTabletLandscape() {
+        webDriver.manage().window().setSize(new Dimension(800,600));
+    }
+
+    public void setAsTabletPortrait() {
+        webDriver.manage().window().setSize(new Dimension(768,1024));
+    }
+
+    public void setAsTabletLandscape() {
+        webDriver.manage().window().setSize(new Dimension(1024,768));
+    }
+
+    public void setAsMaximumWindowSize() {
+        webDriver.manage().window().maximize();
+    }
+
+    public void setFullScreen() {
+        webDriver.manage().window().fullscreen();
     }
 
 }
