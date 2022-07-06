@@ -6,15 +6,15 @@ import org.openqa.selenium.WebDriver;
 
 public abstract class Page {
     protected WebDriver webDriver;
-    private By sideBarLink = new By.ById("react-burger-menu-btn");
-    private By inventorySideBarLink = new By.ById("inventory_sidebar_link");
-    private By aboutSidebarLink = new By.ById("about_sidebar_link");
-    private By logoutSidebarLink = new By.ById("logout_sidebar_link");
-    private By resetSidebarLink = new By.ById("reset_sidebar_link");
-    private By cartIcon = new By.ByClassName("shopping_cart_link");
-    private By twitterLink = new By.ByLinkText("twitter");
-    private By facebookLink = new By.ByLinkText("facebook");
-    private By linkedInLink = new By.ByLinkText("LinkedIn");
+    private final By sideBarLink = new By.ById("react-burger-menu-btn");
+    private final By inventorySideBarLink = new By.ById("inventory_sidebar_link");
+    private final By aboutSidebarLink = new By.ById("about_sidebar_link");
+    private final By logoutSidebarLink = new By.ById("logout_sidebar_link");
+    private final By resetSidebarLink = new By.ById("reset_sidebar_link");
+    private final By cartIcon = new By.ByClassName("shopping_cart_link");
+    private final By twitterLink = new By.ByLinkText("twitter");
+    private final By facebookLink = new By.ByLinkText("facebook");
+    private final By linkedInLink = new By.ByLinkText("LinkedIn");
 
     public String getUrl() {
         return webDriver.getCurrentUrl();
