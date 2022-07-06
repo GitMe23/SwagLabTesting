@@ -6,11 +6,10 @@ import org.openqa.selenium.WebDriver;
 
 public class LoginPage {
 
-    static WebDriver webDriver;
+    private final WebDriver webDriver;
 
-    String username;
     String password = "secret_sauce";
-    
+
     public LoginPage(WebDriver webDriver) {
         this.webDriver = webDriver;
     }
@@ -19,9 +18,26 @@ public class LoginPage {
         return webDriver.getCurrentUrl();
     }
 
+    public void enterUsername(String userName) {
+        webDriver.findElement(By.id("user-name")).sendKeys(userName);
+    }
+
     public void enterPassword() {
         webDriver.findElement(By.id("password")).sendKeys(password);
     }
+
+    public void enterPassword(String userPassword) {
+        webDriver.findElement(By.id("password")).sendKeys(userPassword);
+    }
+
+    public String getUsernameField() {
+        return webDriver.findElement(By.id("user-name")).getText();
+    }
+
+    public String getPasswordField() {
+        return webDriver.findElement(By.id("password")).getText();
+    }
+
     public void clickLogin() {
         webDriver.findElement(By.id("login-button")).click();
     }
@@ -49,10 +65,5 @@ public class LoginPage {
         enterPassword();
         clickLogin();
     }
-
-
-
-
-
 
 }
