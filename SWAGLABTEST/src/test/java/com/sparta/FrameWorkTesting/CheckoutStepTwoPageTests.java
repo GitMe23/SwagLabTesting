@@ -5,11 +5,13 @@ import io.cucumber.java.bs.A;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class CheckoutStepTwoPageTests {
 
@@ -67,7 +69,13 @@ public class CheckoutStepTwoPageTests {
     @Test
     @DisplayName("Check if subtotal is correct")
     void checkIfSubTotalIsCorrect() {
-        Assertions.assertTrue(checkoutStepTwoPage.isSubTotalCorrect(checkoutStepTwoPage.getSubTotalCalc(checkoutStepTwoPage.getPrices())));
+
+        List<WebElement> elements = checkoutStepTwoPage.getPrices();
+        double subTotal = checkoutStepTwoPage.getSubTotalCalc(elements);
+        boolean correctSubTotal = checkoutStepTwoPage.isSubTotalCorrect(subTotal);
+
+
+        Assertions.assertTrue(correctSubTotal);
     }
 
     @Test
@@ -85,8 +93,12 @@ public class CheckoutStepTwoPageTests {
     @Test
     @DisplayName("Check if total is correct")
     void checkIfFinalTotalIsCorrect() {
-        Assertions.assertTrue(checkoutStepTwoPage.isFinalTotalCorrect(
-                checkoutStepTwoPage.getFinalTotalCalc(checkoutStepTwoPage.getSubTotalCalc(checkoutStepTwoPage.getPrices()))));
+
+        List<WebElement> elements = checkoutStepTwoPage.getPrices();
+        double finalTotal = checkoutStepTwoPage.getFinalTotalCalc(checkoutStepTwoPage.getSubTotalCalc(elements));
+        boolean currentTotal = checkoutStepTwoPage.isFinalTotalCorrect(finalTotal);
+
+        Assertions.assertTrue(currentTotal);
     }
 
     @Test
