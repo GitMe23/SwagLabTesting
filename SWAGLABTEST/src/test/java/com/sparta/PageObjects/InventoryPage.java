@@ -77,7 +77,7 @@ public class InventoryPage extends Page {
 
     public boolean isSortedByNameAlphabetically(){
         boolean orderCorrect = true;
-        String previousProduct = "";
+        String previousProduct = getProductName(0);
         for (int i = 0; i < numberOfProducts(); i++) {
             String name = getProductName(i);
             if (name.compareTo(previousProduct) < 0){
@@ -103,7 +103,7 @@ public class InventoryPage extends Page {
 
     public boolean isSortedByPriceLowToHigh(){
         boolean orderCorrect = true;
-        double previousProduct = 0;
+        double previousProduct = getProductPrice(0);
 
         for (int i=0; i < numberOfProducts(); i++){
             double price = getProductPrice(i);
@@ -121,7 +121,7 @@ public class InventoryPage extends Page {
 
         for (int i=0; i < numberOfProducts(); i++){
             double price = getProductPrice(i);
-            if (!(price <= previousProduct)){
+            if (price > previousProduct){
                 orderCorrect = false;
             }
             previousProduct = price;
