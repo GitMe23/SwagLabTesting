@@ -3,12 +3,14 @@ package com.sparta.FrameWorkTesting;
 import com.sparta.PageObjects.*;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 
 import java.io.File;
 import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AbstractPageTests {
@@ -60,6 +62,7 @@ public class AbstractPageTests {
     }
 
     @DisplayName("setDimensions/getDimensions")
+    @Disabled
     @Nested
     class setDimensionsGetDimensions {
         @Test
@@ -173,7 +176,7 @@ public class AbstractPageTests {
             inventoryPage.addToCart(1);
             inventoryPage.addToCart(2);
             inventoryPage.clickSidebarReset();
-            assertEquals(0, inventoryPage.viewItemsInCart());
+            assertThrowsExactly(NoSuchElementException.class, inventoryPage::viewItemsInCart);
         }
     }
 }
