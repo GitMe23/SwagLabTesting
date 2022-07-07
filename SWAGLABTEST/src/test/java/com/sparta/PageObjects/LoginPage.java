@@ -2,7 +2,6 @@ package com.sparta.PageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage {
@@ -32,42 +31,33 @@ public class LoginPage {
         webDriver.findElement(By.id("password")).sendKeys(userPassword);
     }
 
-    public String getUsernameField() {
-        return webDriver.findElement(By.id("user-name")).getText();
-    }
-
-    public String getPasswordField() {
-        return webDriver.findElement(By.id("password")).getText();
-    }
-
     public void clickLogin() {
         webDriver.findElement(By.id("login-button")).click();
     }
 
 
     public InventoryPage loginAsStandardUser() {
-        webDriver.findElement(By.id("user-name")).sendKeys("standard_user");
+        enterUsername("standard_user");
         enterPassword();
         clickLogin();
         return new InventoryPage(webDriver);
     }
 
-    public InventoryPage loginAsLockedOutUser() {
-        webDriver.findElement(By.id("user-name")).sendKeys("standard_user");
+    public void loginAsLockedOutUser() {
+        enterUsername("locked_out_user");
         enterPassword();
         clickLogin();
-        return new InventoryPage(webDriver);
     }
 
     public InventoryPage loginAsProblemUser() {
-        webDriver.findElement(By.id("user-name")).sendKeys("problem_user");
+        enterUsername("problem_user");
         enterPassword();
         clickLogin();
         return new InventoryPage(webDriver);
     }
 
     public InventoryPage loginAsPerformanceGlitchUser() {
-        webDriver.findElement(By.id("user-name")).sendKeys("performance_glitch_user");
+        enterUsername("performance_glitch_user");
         enterPassword();
         clickLogin();
         return new InventoryPage(webDriver);
