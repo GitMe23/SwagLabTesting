@@ -3,6 +3,13 @@ package com.sparta.PageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.Set;
 
 public abstract class Page {
     protected WebDriver webDriver;
@@ -12,8 +19,8 @@ public abstract class Page {
     private final By logoutSidebarLink = new By.ById("logout_sidebar_link");
     private final By resetSidebarLink = new By.ById("reset_sidebar_link");
     private final By cartIcon = new By.ByClassName("shopping_cart_link");
-    private final By twitterLink = new By.ByLinkText("twitter");
-    private final By facebookLink = new By.ByLinkText("facebook");
+    private final By twitterLink = new By.ByLinkText("Twitter");
+    private final By facebookLink = new By.ByLinkText("Facebook");
     private final By linkedInLink = new By.ByLinkText("LinkedIn");
     private final By sideBarCross = new By.ById("react-burger-cross-btn");
 
@@ -22,6 +29,9 @@ public abstract class Page {
     }
     public void setDimensions(int width, int height) {
         webDriver.manage().window().setSize(new Dimension(width, height));
+    }
+    public Dimension getDimensions() {
+        return webDriver.manage().window().getSize();
     }
     public void changeDimensionsToIPhoneSE() {
         setDimensions(375, 667);
@@ -46,43 +56,76 @@ public abstract class Page {
     }
 
     public ExternalPage clickTwitterLink() {
-        webDriver.findElement(twitterLink).click();
+        fluentWaitToClick(10, twitterLink);
+        changeToNextTab();
         return new ExternalPage(webDriver);
     }
+
     public ExternalPage clickFacebookLink() {
-        webDriver.findElement(facebookLink).click();
+        fluentWaitToClick(10, facebookLink);
+        changeToNextTab();
         return new ExternalPage(webDriver);
     }
+
     public ExternalPage clickLinkedInLink() {
-        webDriver.findElement(linkedInLink).click();
+        fluentWaitToClick(10, linkedInLink);
+        changeToNextTab();
         return new ExternalPage(webDriver);
     }
     public CartPage clickCartIcon() {
-        webDriver.findElement(cartIcon).click();
+        fluentWaitToClick(10, cartIcon);
         return new CartPage(webDriver);
     }
     public InventoryPage clickSidebarInventory() {
         openDropDownMenu();
-        webDriver.findElement(inventorySideBarLink).click();
+        explicitWaitToClick(10, inventorySideBarLink);
         return new InventoryPage(webDriver);
     }
     public ExternalPage clickSidebarAbout() {
         openDropDownMenu();
-        webDriver.findElement(aboutSidebarLink).click();
+        explicitWaitToClick(10, aboutSidebarLink);
         return new ExternalPage(webDriver);
     }
     public LoginPage clickSidebarLogout() {
         openDropDownMenu();
-        webDriver.findElement(logoutSidebarLink).click();
+        explicitWaitToClick(10, logoutSidebarLink);
         return new LoginPage(webDriver);
     }
     public void clickSidebarReset() {
         openDropDownMenu();
-        webDriver.findElement(resetSidebarLink).click();
+        explicitWaitToClick(10, resetSidebarLink);
         closeDropDownMenu();
     }
-    private void openDropDownMenu() {
-        webDriver.findElement(sideBarOpen).click();
+    public void changeToNextTab() {
+        Wait<WebDriver> wait = new FluentWait<>(webDriver)
+                .withTimeout(Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofSeconds(1));
+        wait.until((driver) -> driver.getWindowHandles().size() > 1);
+        Set<String> allWindows = webDriver.getWindowHandles();
+        for (String window : allWindows) {
+            if (!window.equals(webDriver.getWindowHandle())) {
+                webDriver.close();
+                webDriver.switchTo().window(window);
+                break;
+            }
+        }
     }
-    private void closeDropDownMenu() { webDriver.findElement(sideBarCross).click(); }
+    public void explicitWaitForClickable(int seconds, By element) {
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(seconds));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+    public void explicitWaitToClick(int seconds, By element) {
+        explicitWaitForClickable(seconds, element);
+        webDriver.findElement(element).click();
+    }
+    public void fluentWaitToClick(int seconds, By element) {
+        Wait<WebDriver> wait = new FluentWait<>(webDriver)
+                .withTimeout(Duration.ofSeconds(seconds))
+                .pollingEvery(Duration.ofSeconds(1));
+        wait.until((driver) -> driver.findElement(element)).click();
+    }
+    private void openDropDownMenu() {
+        fluentWaitToClick(5, sideBarOpen);
+    }
+    private void closeDropDownMenu() { fluentWaitToClick(5, sideBarCross); }
 }
