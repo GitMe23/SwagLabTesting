@@ -67,13 +67,38 @@ public class CheckoutStepTwoPageTests {
     @Test
     @DisplayName("Check if subtotal is correct")
     void checkIfSubTotalIsCorrect() {
-        Assertions.assertTrue(checkoutStepTwoPage.isSubTotalCorrect());
+        Assertions.assertTrue(checkoutStepTwoPage.isSubTotalCorrect(checkoutStepTwoPage.getSubTotalCalc(checkoutStepTwoPage.getPrices())));
+    }
+
+    @Test
+    @DisplayName("Check if subtotal is correct with correct value")
+    void checkIfSubTotalIsCorrectWithCorrectValue() {
+        Assertions.assertTrue(checkoutStepTwoPage.isSubTotalCorrect(45.98));
+    }
+
+    @Test
+    @DisplayName("Check if subtotal is correct with incorrect value")
+    void checkIfSubTotalIsCorrectWithIncorrectValue() {
+        Assertions.assertFalse(checkoutStepTwoPage.isSubTotalCorrect(0));
     }
 
     @Test
     @DisplayName("Check if total is correct")
     void checkIfFinalTotalIsCorrect() {
-        Assertions.assertTrue(checkoutStepTwoPage.isFinalTotalCorrect());
+        Assertions.assertTrue(checkoutStepTwoPage.isFinalTotalCorrect(
+                checkoutStepTwoPage.getFinalTotalCalc(checkoutStepTwoPage.getSubTotalCalc(checkoutStepTwoPage.getPrices()))));
+    }
+
+    @Test
+    @DisplayName("check if total is correct with incorrect value")
+    void checkIfTotalIsCorrectWithIncorrectValue() {
+        Assertions.assertFalse(checkoutStepTwoPage.isFinalTotalCorrect(9.23));
+    }
+
+    @Test
+    @DisplayName("check if total is correct with correct value")
+    void checkIfTotalIsCorrectWithCorrectValue() {
+        Assertions.assertTrue(checkoutStepTwoPage.isFinalTotalCorrect(49.66));
     }
 
     @Test
@@ -89,9 +114,15 @@ public class CheckoutStepTwoPageTests {
     }
 
     @Test
-    @DisplayName("Check prices only have 2 decimal places after point")
+    @DisplayName("Check prices only have 2 decimal places after point with proper number")
     void checkPricesHaveOnlyTwoDecimalPlaces() {
-        Assertions.assertTrue(checkoutStepTwoPage.hasTwoNumsPastPoint(checkoutStepTwoPage.getTaxCost()));
+        Assertions.assertTrue(checkoutStepTwoPage.hasTwoNumsPastPoint("762233.90"));
+    }
+
+    @Test
+    @DisplayName("Check prices only have 2 decimal places after point with weird number")
+    void checkPricesHaveOnlyTwoDecimalPlacesWithWeirdNumber() {
+        Assertions.assertFalse(checkoutStepTwoPage.hasTwoNumsPastPoint("43.4209"));
     }
 
     @Test
