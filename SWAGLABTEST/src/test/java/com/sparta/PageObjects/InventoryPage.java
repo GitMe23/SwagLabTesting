@@ -49,7 +49,7 @@ public class InventoryPage extends Page {
         WebElement productAddedToCart = getProducts(index).findElement(By.className("btn_inventory"));
         productAddedToCart.click();
         return productAddedToCart;
-        //div.summary_value_label:nth-child(2)
+
     }
     public boolean addedToCart(int index){
         boolean isItemInCart = false;
@@ -131,7 +131,6 @@ public class InventoryPage extends Page {
 
 
     public InventoryItemPage goToItemPageBasedOnSortedOrderPosition(int index){
-        String productName = getProductName(index);
         getProducts(index).findElement(By.className("inventory_item_name")).click();
         return new InventoryItemPage(webDriver);
     }
@@ -142,18 +141,13 @@ public class InventoryPage extends Page {
     }
 
     public InventoryItemPage goToItemPageByImageBasedOnPosition(int index){
-        String productName = getProductName(index);
         getProducts(index).findElement(By.className("inventory_item_img")).click();
         return new InventoryItemPage(webDriver);
     }
-    // might need to combine find elements for the below method
+
     public int viewItemsInCart(){
         String shoppingCartNumber = "";
-        try {
-            shoppingCartNumber = webDriver.findElement(By.className("shopping_cart_badge")).getText();
-        }catch (Exception e) {
-            return 0;
-        }
+        shoppingCartNumber = webDriver.findElement(By.className("shopping_cart_badge")).getText();
         return Integer.parseInt(shoppingCartNumber);
     }
 
