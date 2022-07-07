@@ -1,6 +1,5 @@
 package com.sparta.PageObjects;
 
-import io.cucumber.java.bs.I;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,6 +27,7 @@ public class InventoryPage extends Page {
     public String getProductDescription(int index){
         return getProducts(index).findElement(By.className("inventory_item_desc")).getText();
     }
+
     public double getProductPrice(int index){
         String productPrice = getProducts(index).findElement(By.className("inventory_item_price")).getText();
         productPrice = productPrice.replaceAll("[$]", "");
@@ -44,6 +44,37 @@ public class InventoryPage extends Page {
         List<WebElement> products = webDriver.findElements(By.className("inventory_item"));
         return products.size();
     }
+
+    public WebElement addToCart(int index){
+        WebElement productAddedToCart = getProducts(index).findElement(By.className("btn_inventory"));
+        productAddedToCart.click();
+        return productAddedToCart;
+        //div.summary_value_label:nth-child(2)
+    }
+    public boolean addedToCart(int index){
+        boolean isItemInCart = false;
+        if(getProducts(index).findElement(By.className("btn_inventory")).getText().equals("ADD TO CART")){
+            getProducts(index).findElement(By.className("btn_inventory")).click();
+            return isItemInCart = true;
+        }
+        else if(getProducts(index).findElement(By.className("btn_inventory")).getText().equals("REMOVE")){
+            return isItemInCart = true;
+        }
+        return isItemInCart;
+    }
+    public boolean removedFromCart(int index){
+        getProducts(index).findElement(By.className("btn_inventory")).click();
+        boolean isItemInCart = true;
+        if(getProducts(index).findElement(By.className("btn_inventory")).getText().equals("REMOVE")){
+            getProducts(index).findElement(By.className("btn_inventory")).click();
+            return isItemInCart = false;
+        }
+        else if(getProducts(index).findElement(By.className("btn_inventory")).getText().equals("ADD TO CART")){
+            return isItemInCart = true;
+        }
+        return isItemInCart;
+    }
+
     public boolean isSortedByNameAlphabetically(){
         boolean orderCorrect = true;
         String previousProduct = "";
@@ -59,10 +90,10 @@ public class InventoryPage extends Page {
 
     public boolean isSortedByNameAlphabeticallyReversed(){
         boolean orderCorrect = true;
-        String previousProduct = "";
+        String previousProduct = getProductName(0);
         for (int i = 0; i < numberOfProducts(); i++) {
             String name = getProductName(i);
-            if (name.compareTo(previousProduct) < 0){
+            if (name.compareTo(previousProduct) > 0){
                 orderCorrect = false;
             }
             previousProduct = name;
@@ -105,12 +136,12 @@ public class InventoryPage extends Page {
         return new InventoryItemPage(webDriver);
     }
 
-    public InventoryItemPage goToItemPageBasedOnName (String name){
+    public InventoryItemPage goToItemPageBasedOnNameOfItem (String name){
         webDriver.findElement(By.linkText(name)).click();
         return new InventoryItemPage(webDriver);
     }
 
-    public InventoryItemPage goToItemPageBYImage(int index){
+    public InventoryItemPage goToItemPageByImageBasedOnPosition(int index){
         String productName = getProductName(index);
         getProducts(index).findElement(By.className("inventory_item_img")).click();
         return new InventoryItemPage(webDriver);
@@ -125,4 +156,5 @@ public class InventoryPage extends Page {
         }
         return Integer.parseInt(shoppingCartNumber);
     }
+
 }
