@@ -122,7 +122,7 @@ public class InventoryTesting {
         @Test
         @DisplayName("Given I am on the inventory page when I click on the name of an item it should take me to that items page ")
         void goToItemPageViaPosition() {
-            inventoryItemPage = inventoryPage.goToItemPageByImageBasedOnPosition(0);
+            inventoryItemPage = inventoryPage.goToItemPageBasedOnSortedOrderPosition(0);
             Assertions.assertEquals("https://www.saucedemo.com/inventory-item.html?id=4", inventoryItemPage.getUrl());
         }
 
