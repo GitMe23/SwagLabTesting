@@ -94,6 +94,17 @@ public class CheckoutStepTwoPageTests {
         Assertions.assertTrue(checkoutStepTwoPage.hasTwoNumsPastPoint(checkoutStepTwoPage.getTaxCost()));
     }
 
+    @Test
+    @DisplayName("Check that the cancel button takes you to the inventory page")
+    void checkCancelButtonTakesYouToInterviewPage() {
+        Assertions.assertEquals(InventoryPage.class, checkoutStepTwoPage.clickCancel().getClass());
+    }
+
+    @Test
+    @DisplayName("Check that the finish button takes you to the checkoutComplete page")
+    void checkFinishButtonTakesYouToCheckoutCompletePage() {
+        Assertions.assertEquals(CheckoutCompletePage.class, checkoutStepTwoPage.clickFinish().getClass());
+    }
 
     @AfterEach
     void tearDown() {driver.close();}
