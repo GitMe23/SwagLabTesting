@@ -22,6 +22,7 @@ public class FrameTestAhmed {
 
     @BeforeAll
     static void setupAll() {
+
         service = new ChromeDriverService
                 .Builder()
                 .usingDriverExecutable(new File("src/test/resources/chromedriver.exe"))
@@ -36,6 +37,7 @@ public class FrameTestAhmed {
 
     @BeforeEach
     void setup() {
+
         driver = new ChromeDriver(service);
         driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
@@ -55,6 +57,7 @@ public class FrameTestAhmed {
     @Test
     @DisplayName("checkout from cart")
     void checkoutFromCart() {
+
         cartPage = inventoryPage.clickCartIcon();
         cartPage.getCheckout();
     }
@@ -62,6 +65,7 @@ public class FrameTestAhmed {
     @Test
     @DisplayName("removed item from cart")
     void removedItemFromCart() {
+
         driver.findElement(By.id("add-to-cart-sauce-labs-backpack")).click();
         cartPage = inventoryPage.clickCartIcon();
         driver.findElement(By.id("remove-sauce-labs-backpack")).click();
@@ -71,6 +75,7 @@ public class FrameTestAhmed {
     @Test
     @DisplayName("check item in cart")
     void checkItemInCart() {
+
         driver.findElement(By.id("add-to-cart-sauce-labs-backpack")).click();
         cartPage = inventoryPage.clickCartIcon();
         cartPage.checkItemFromCart();
@@ -79,6 +84,7 @@ public class FrameTestAhmed {
     @Test
     @DisplayName("check the continue shopping btn")
     void checkContinueShopping() {
+
         cartPage = inventoryPage.clickCartIcon();
         cartPage.checkContinueShopBtn();
     }
@@ -86,6 +92,7 @@ public class FrameTestAhmed {
     @Test
     @DisplayName("check that checkout complete works")
     void completeCheckout() {
+
         driver.findElement(By.id("add-to-cart-sauce-labs-backpack")).click();
         cartPage = inventoryPage.clickCartIcon();
         checkoutStepOnePage = cartPage.getCheckout();
@@ -98,6 +105,7 @@ public class FrameTestAhmed {
     @Test
     @DisplayName("check multiple items removed")
     void checkMultipleItemsRemoved() {
+
         driver.findElement(By.id("add-to-cart-sauce-labs-backpack")).click();
         driver.findElement(By.id("add-to-cart-sauce-labs-bike-light")).click();
         driver.findElement(By.id("add-to-cart-sauce-labs-bolt-t-shirt")).click();
