@@ -30,4 +30,8 @@ public class CartPage extends Page {
         webDriver.findElement(By.id("continue-shopping"));
         return new InventoryPage(webDriver);
     }
+
+    public void increaseQuantity() {
+        webDriver.findElement(By.className("cart-quantity")).sendKeys("2");
+    }
 }
