@@ -114,4 +114,13 @@ public class FrameTestAhmed {
         driver.findElement(By.id("remove-sauce-labs-bolt-t-shirt")).click();
         cartPage.checkItemRemoved();
     }
+
+    @Test
+    @DisplayName("increase quantity from cart")
+    void increaseQuantityFromCart () {
+        driver.findElement(By.id("add-to-cart-sauce-labs-backpack")).click();
+        cartPage = inventoryPage.clickCartIcon();
+        cartPage.increaseQuantity();
+    }
+
 }
