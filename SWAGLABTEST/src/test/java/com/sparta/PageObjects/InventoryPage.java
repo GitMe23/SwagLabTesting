@@ -45,6 +45,8 @@ public class InventoryPage extends Page {
         return products.size();
     }
 
+
+
     public WebElement addToCart(int index){
         WebElement productAddedToCart = getProducts(index).findElement(By.className("btn_inventory"));
         productAddedToCart.click();
