@@ -1,7 +1,7 @@
 package com.sparta.PageObjects;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage {
@@ -12,6 +12,7 @@ public class LoginPage {
 
     public LoginPage(WebDriver webDriver) {
         this.webDriver = webDriver;
+        webDriver.get("https://www.saucedemo.com/");
     }
 
     public String getUrl() {
@@ -30,40 +31,74 @@ public class LoginPage {
         webDriver.findElement(By.id("password")).sendKeys(userPassword);
     }
 
-    public String getUsernameField() {
-        return webDriver.findElement(By.id("user-name")).getText();
-    }
-
-    public String getPasswordField() {
-        return webDriver.findElement(By.id("password")).getText();
-    }
-
     public void clickLogin() {
         webDriver.findElement(By.id("login-button")).click();
     }
 
-    public void loginAsStandardUser() {
-        webDriver.findElement(By.id("user-name")).sendKeys("standard_user");
+
+    public InventoryPage loginAsStandardUser() {
+        enterUsername("standard_user");
         enterPassword();
         clickLogin();
+        return new InventoryPage(webDriver);
     }
 
     public void loginAsLockedOutUser() {
-        webDriver.findElement(By.id("user-name")).sendKeys("standard_user");
+        enterUsername("locked_out_user");
         enterPassword();
         clickLogin();
     }
 
-    public void loginAsProblemUser() {
-        webDriver.findElement(By.id("user-name")).sendKeys("problem_user");
+    public InventoryPage loginAsProblemUser() {
+        enterUsername("problem_user");
         enterPassword();
         clickLogin();
+        return new InventoryPage(webDriver);
     }
 
-    public void loginAsPerformanceGlitchUser() {
-        webDriver.findElement(By.id("user-name")).sendKeys("performance_glitch_user");
+    public InventoryPage loginAsPerformanceGlitchUser() {
+        enterUsername("performance_glitch_user");
         enterPassword();
         clickLogin();
+        return new InventoryPage(webDriver);
     }
+
+    public void setDeviceSize(int width, int height) {
+        webDriver.manage().window().setSize(new Dimension(width, height));
+    }
+
+
+    public void setAsMobilePortrait() {
+        setDeviceSize(320, 480);
+    }
+
+    public void setAsMobileLandscape() {
+        setDeviceSize(480, 320);
+    }
+
+    public void setAsSmallTabletPortrait() {
+        setDeviceSize(600,800);
+    }
+
+    public void setAsSmallTabletLandscape() {
+        setDeviceSize(800,600);
+    }
+
+    public void setAsTabletPortrait() {
+        setDeviceSize(768,1024);
+    }
+
+    public void setAsTabletLandscape() {
+        setDeviceSize(1024,768);
+    }
+
+    public void setAsMaximumWindowSize() {
+        webDriver.manage().window().maximize();
+    }
+
+    public void setFullScreen() {
+        webDriver.manage().window().fullscreen();
+    }
+
 
 }
