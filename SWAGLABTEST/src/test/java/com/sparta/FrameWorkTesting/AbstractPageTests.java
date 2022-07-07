@@ -169,8 +169,11 @@ public class AbstractPageTests {
         @DisplayName("check: reset state")
         void checkResetState() {
             InventoryPage inventoryPage = (InventoryPage) page;
-
+            inventoryPage.addToCart(0);
+            inventoryPage.addToCart(1);
+            inventoryPage.addToCart(2);
             inventoryPage.clickSidebarReset();
+            assertEquals(0, inventoryPage.viewItemsInCart());
         }
     }
 }

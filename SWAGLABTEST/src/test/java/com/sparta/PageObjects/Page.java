@@ -124,8 +124,6 @@ public abstract class Page {
                 .pollingEvery(Duration.ofSeconds(1));
         wait.until((driver) -> driver.findElement(element)).click();
     }
-    private void openDropDownMenu() {
-        fluentWaitToClick(5, sideBarOpen);
-    }
+    private void openDropDownMenu() { fluentWaitToClick(5, sideBarOpen); }
     private void closeDropDownMenu() { fluentWaitToClick(5, sideBarCross); }
 }
