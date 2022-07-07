@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -177,6 +177,11 @@ public class InventoryTesting {
             inventoryPage.getProducts(2).findElement(By.className("btn_inventory")).click();
             Assertions.assertEquals(3, inventoryPage.viewItemsInCart());
         }
+    }
+    @Test
+    @DisplayName("Parsing method works correctly")
+    void canParse(){
+        Assertions.assertEquals(38.93, inventoryPage.parseStringToDouble("38.93"));
     }
 }
 

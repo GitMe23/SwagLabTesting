@@ -30,10 +30,14 @@ public class InventoryPage extends Page {
 
     public double getProductPrice(int index){
         String productPrice = getProducts(index).findElement(By.className("inventory_item_price")).getText();
-        productPrice = productPrice.replaceAll("[$]", "");
+        double parsedPrice = parseStringToDouble(productPrice);
+        return parsedPrice;
+    }
 
-        double price = Double.parseDouble(productPrice);
-        return price;
+    public double parseStringToDouble(String input){
+        input = input.replaceAll("[$]", "");
+        double output = Double.parseDouble(input);
+        return output;
     }
 
     public WebElement getProducts(int index){
@@ -49,7 +53,6 @@ public class InventoryPage extends Page {
         WebElement productAddedToCart = getProducts(index).findElement(By.className("btn_inventory"));
         productAddedToCart.click();
         return productAddedToCart;
-
     }
     public boolean addedToCart(int index){
         boolean isItemInCart = false;
