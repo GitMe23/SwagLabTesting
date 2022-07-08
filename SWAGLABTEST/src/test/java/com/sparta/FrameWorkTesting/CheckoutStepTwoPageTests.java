@@ -149,6 +149,8 @@ public class CheckoutStepTwoPageTests {
         Assertions.assertEquals(CheckoutCompletePage.class, checkoutStepTwoPage.clickFinish().getClass());
     }
 
+
+
     @AfterEach
     void tearDown() {driver.close();}
 
