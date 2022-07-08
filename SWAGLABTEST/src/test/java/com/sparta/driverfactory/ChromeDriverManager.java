@@ -19,8 +19,8 @@ public class ChromeDriverManager implements DriverManager {
 
 
 
-    //@Override
-    public void createDriver() {
+    @Override
+    public WebDriver createDriver() {
         service = new ChromeDriverService
                 .Builder()
                 .usingDriverExecutable(new File("src/test/resources/chromedriver.exe"))
@@ -35,5 +35,14 @@ public class ChromeDriverManager implements DriverManager {
         options = new ChromeOptions();
         options.addArguments("headless");
         webDriver = new ChromeDriver(service, options);
+        webDriver.manage().window().maximize();
+        return webDriver;
+    }
+
+    public void closeTab() {
+        webDriver.close();
+    }
+    public void stopService() {
+        service.stop();
     }
 }

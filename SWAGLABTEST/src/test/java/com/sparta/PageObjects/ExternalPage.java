@@ -7,4 +7,8 @@ public class ExternalPage {
     public ExternalPage(WebDriver webdriver) {
         this.webDriver = webdriver;
     }
+
+    public String getUrl() {
+        return webDriver.getCurrentUrl();
+    }
 }
