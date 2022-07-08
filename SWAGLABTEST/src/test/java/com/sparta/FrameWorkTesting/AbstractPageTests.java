@@ -153,19 +153,19 @@ public class AbstractPageTests {
         @Test
         @DisplayName("check: return to inventory page")
         void checkReturnToInventoryPage() {
-            assertEquals(InventoryPage.class, page.clickCartIcon().getCheckout().clickSidebarInventory().getClass());
+            assertEquals("https://www.saucedemo.com/inventory.html", page.clickCartIcon().getCheckout().clickSidebarInventory().getUrl());
         }
 
         @Test
         @DisplayName("check: go to About page")
         void checkGoToAboutPage() {
-            assertEquals(ExternalPage.class, page.clickSidebarAbout().getClass());
+            assertEquals("https://saucelabs.com/", page.clickSidebarAbout().getUrl());
         }
 
         @Test
         @DisplayName("check: logout")
         void checkLogout() {
-            assertEquals(LoginPage.class, page.clickSidebarLogout().getClass());
+            assertEquals("https://www.saucedemo.com/", page.clickSidebarLogout().getUrl());
         }
 
         @Test

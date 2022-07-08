@@ -110,6 +110,11 @@ public abstract class Page {
             }
         }
     }
+    public void explicitWaitForUrl(int seconds, String expected) {
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(seconds));
+//        wait.until(ExpectedConditions.);
+        //TODO: Make this method wait for a url to update
+    }
     public void explicitWaitForClickable(int seconds, By element) {
         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(seconds));
         wait.until(ExpectedConditions.elementToBeClickable(element));
