@@ -5,11 +5,13 @@ import io.cucumber.java.bs.A;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class CheckoutStepTwoPageTests {
 
@@ -67,13 +69,48 @@ public class CheckoutStepTwoPageTests {
     @Test
     @DisplayName("Check if subtotal is correct")
     void checkIfSubTotalIsCorrect() {
-        Assertions.assertTrue(checkoutStepTwoPage.isSubTotalCorrect());
+
+        List<WebElement> elements = checkoutStepTwoPage.getPrices();
+        double subTotal = checkoutStepTwoPage.getSubTotalCalc(elements);
+        boolean correctSubTotal = checkoutStepTwoPage.isSubTotalCorrect(subTotal);
+
+
+        Assertions.assertTrue(correctSubTotal);
+    }
+
+    @Test
+    @DisplayName("Check if subtotal is correct with correct value")
+    void checkIfSubTotalIsCorrectWithCorrectValue() {
+        Assertions.assertTrue(checkoutStepTwoPage.isSubTotalCorrect(45.98));
+    }
+
+    @Test
+    @DisplayName("Check if subtotal is correct with incorrect value")
+    void checkIfSubTotalIsCorrectWithIncorrectValue() {
+        Assertions.assertFalse(checkoutStepTwoPage.isSubTotalCorrect(0));
     }
 
     @Test
     @DisplayName("Check if total is correct")
     void checkIfFinalTotalIsCorrect() {
-        Assertions.assertTrue(checkoutStepTwoPage.isFinalTotalCorrect());
+
+        List<WebElement> elements = checkoutStepTwoPage.getPrices();
+        double finalTotal = checkoutStepTwoPage.getFinalTotalCalc(checkoutStepTwoPage.getSubTotalCalc(elements));
+        boolean currentTotal = checkoutStepTwoPage.isFinalTotalCorrect(finalTotal);
+
+        Assertions.assertTrue(currentTotal);
+    }
+
+    @Test
+    @DisplayName("check if total is correct with incorrect value")
+    void checkIfTotalIsCorrectWithIncorrectValue() {
+        Assertions.assertFalse(checkoutStepTwoPage.isFinalTotalCorrect(9.23));
+    }
+
+    @Test
+    @DisplayName("check if total is correct with correct value")
+    void checkIfTotalIsCorrectWithCorrectValue() {
+        Assertions.assertTrue(checkoutStepTwoPage.isFinalTotalCorrect(49.66));
     }
 
     @Test
@@ -89,9 +126,15 @@ public class CheckoutStepTwoPageTests {
     }
 
     @Test
-    @DisplayName("Check prices only have 2 decimal places after point")
+    @DisplayName("Check prices only have 2 decimal places after point with proper number")
     void checkPricesHaveOnlyTwoDecimalPlaces() {
-        Assertions.assertTrue(checkoutStepTwoPage.hasTwoNumsPastPoint(checkoutStepTwoPage.getTaxCost()));
+        Assertions.assertTrue(checkoutStepTwoPage.hasTwoNumsPastPoint("762233.90"));
+    }
+
+    @Test
+    @DisplayName("Check prices only have 2 decimal places after point with weird number")
+    void checkPricesHaveOnlyTwoDecimalPlacesWithWeirdNumber() {
+        Assertions.assertFalse(checkoutStepTwoPage.hasTwoNumsPastPoint("43.4209"));
     }
 
     @Test

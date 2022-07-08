@@ -28,33 +28,40 @@ public class CheckoutStepTwoPage extends Page {
         this.webDriver = webDriver;
     }
 
-    public double subTotalCalc() {
-        List<WebElement> productPrices = webDriver.findElements(itemPrice);
+    public double convertElementToDouble(WebElement element) {
+        return Double.parseDouble(element.getText().substring(1));
+    }
+
+    public List<WebElement> getPrices() {
+        return webDriver.findElements(itemPrice);
+    }
+
+
+    public double getSubTotalCalc(List<WebElement> ls) {
+//        List<WebElement> productPrices = webDriver.findElements(itemPrice);
         double total = 0;
-        for (WebElement i : productPrices) {
+        for (WebElement i : ls) {
             String prices = i.getText().substring(1);
             double doublePrices = Double.parseDouble(prices);
             total += doublePrices;
         }
-//        System.out.println(total);
-//        System.out.println(Double.parseDouble(webDriver.findElement(this.taxCost).getText().substring(6)));
-//        System.out.println( Double.parseDouble(webDriver.findElement(this.total).getText().substring(8)));
+
         return total;
     }
 
-    public double finalTotalCalc() {
-        return subTotalCalc() + Double.parseDouble(webDriver.findElement(taxCost).getText().substring(6));
+    public double getFinalTotalCalc(double subTotal) {
+        return subTotal + Double.parseDouble(webDriver.findElement(taxCost).getText().substring(6));
     }
 
 
-    public boolean isSubTotalCorrect() {
-        return subTotalCalc() == Double.parseDouble(webDriver.findElement(this.subTotal).getText().substring(13));
+    public boolean isSubTotalCorrect(double subTotal) {
+        return subTotal == Double.parseDouble(webDriver.findElement(this.subTotal).getText().substring(13));
     }
 
     //Double.parseDouble(webDriver.findElement(this.taxCost).getText().substring(6))
 
-    public boolean isFinalTotalCorrect() {
-        return finalTotalCalc() == Double.parseDouble(webDriver.findElement(this.total).getText().substring(8));
+    public boolean isFinalTotalCorrect(double finalTotal) {
+        return finalTotal == Double.parseDouble(webDriver.findElement(this.total).getText().substring(8));
     }
 
     public boolean hasTotalAtBottom() {
@@ -109,12 +116,15 @@ public class CheckoutStepTwoPage extends Page {
         return new InventoryPage(webDriver);
     }
 
+    public String convertByElementToString(By element) {
+        return webDriver.findElement(element).getText();
+    }
 
-    public boolean hasTwoNumsPastPoint(By element) {
+    public boolean hasTwoNumsPastPoint(String element) {
 
-        String subtotal = webDriver.findElement(element).getText();
-        String subtotalCheck = subtotal.substring(subtotal.indexOf(".")+1);
-        System.out.println(subtotalCheck);
+//        String subtotal = webDriver.findElement(element).getText();
+
+        String subtotalCheck = element.substring(element.indexOf(".")+1);
         return subtotalCheck.length() == 2;
     }
 
